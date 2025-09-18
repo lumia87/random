@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Bốc chọn đề thi</title>
+  <!-- EmailJS SDK -->
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <script>
+    (function(){
+      // Khởi tạo EmailJS
+      emailjs.init("HAmi3iw0i14D7SipM"); // Thay bằng Public Key của bạn
+    })();
+  </script>
+  <style>
+    body { font-family: Arial; text-align: center; margin-top: 100px; }
+    input, button { padding: 10px; font-size: 16px; margin: 5px; }
+    h1 { font-size: 48px; color: darkblue; }
+    h2 { font-size: 48px; color: red; }
+  </style>
+</head>
+<body>
+  <h1> BỐC THĂM CHỌN ĐỀ THI </h1>
+  <h2 id="number">?</h2>
+  <div>
+    <label>Email: </label><input type="email" id="emailInput" placeholder="Nhập email nhận số" required>
+  </div>
+  <div>
+
+    <button id="drawBtn" onclick="generate()">Bốc đề thi</button>
+  </div>
+
+  <script>
+    function generate() {
+      const min = 1;
+      const max = 2; // có thể chỉnh lại khoảng số
+
+      const randomNum = Math.floor(Math.random() * (max - min + 1)) + min;
+      document.getElementById("number").innerText = randomNum;
+
+      const emailTo = document.getElementById("emailInput").value;
+      const btn = document.getElementById("drawBtn");
+
+      if (!emailTo) {
+        alert("Vui lòng nhập địa chỉ email!");
+        return;
+      }
+
+      // Gửi email bằng EmailJS
+      emailjs.send("service_yjcekhn", "template_77rlnmd", {
+        message: "Số đã bốc: " + randomNum,
+        to_email: emailTo
+      })
+      .then(function(response) {
+        alert("Đã gửi số " + randomNum + " về email " + emailTo + "!");
+        
+        // Khóa nút không cho bốc lại
+        btn.disabled = true;
+        btn.innerText = "Đã chọn đề thi";
+      }, function(error) {
+        alert("Lỗi gửi email: " + JSON.stringify(error));
+      });
+    }
+  </script>
+</body>
+</html>
