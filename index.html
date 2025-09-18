@@ -47,11 +47,11 @@
 
       // Gửi email bằng EmailJS
       emailjs.send("service_yjcekhn", "template_77rlnmd", {
-        message: "Số đã bốc: " + randomNum,
+        message: "Đề thi số: " + randomNum,
         to_email: emailTo
       })
       .then(function(response) {
-        alert("Đã gửi số " + randomNum + " về email " + emailTo + "!");
+        alert("Đã gửi số đề thi về email " + emailTo + "!");
         
         // Khóa nút không cho bốc lại
         btn.disabled = true;
